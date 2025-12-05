@@ -1,61 +1,40 @@
 # Assignment 2: Intricate Square Placement
 
-A C-based strategy game implementation inspired by Teeko, featuring a 5×5 board where two players compete to form winning patterns through strategic piece placement and movement.
+A C program simulating a two-player strategy game where players compete to arrange their pieces in winning patterns on a 5×5 board.
 
 ## Features
-Core Gameplay
 
--Two-phase game mechanics: Initial piece placement followed by strategic movement
-5×5 game board with coordinate-based positioning (A-E columns, 1-5 rows)
--Multiple winning conditions: Four in a row (any direction) or 2×2 square formation
--Turn-based system with move counter tracking per player
+- Two-phase gameplay: piece placement followed by strategic movement
+- 5×5 game board with coordinate-based positioning (columns A-E, rows 1-5)
+- Multiple winning conditions: four in a row (any direction) or 2×2 square formation
+- Turn-based system with move counter tracking per player
+- Command-line argument parsing for optional color mode
+- Input validation and error handling
+- Case-insensitive command processing
+- Real-time board updates and remaining pieces tracker
 
-Technical Features
+## Technical Concepts Demonstrated
 
--Command-line argument parsing for optional color mode
--Input validation and error handling for all user inputs
--Case-insensitive command processing
--EOF handling for graceful program termination
--Arbitrary-length input handling without crashes
-
-Visual Options
-
--Standard mode: Text-based board with Unicode symbols (■ for Player 1, □ for Player 2)
--Color mode: Enhanced visualization with colored pieces (red for Player 1, yellow for Player 2)
--Real-time board updates after each move
--Remaining pieces tracker during placement phase
-
-Game Rules
-Phase 1: Placing Pieces (Moves 1-4 per player)
-
--Each player places their 4 pieces on any empty field
--Input format: <column><row> (e.g., b2, d4)
--Pieces cannot be moved until all 8 pieces are on the board
-
-Phase 2: Shifting Pieces (Move 5 onwards)
-
--Players move one piece at a time to an adjacent empty field
--Input format: <from_column><from_row> <to_column><to_row> (e.g., b2 c3)
--Adjacent means directly next to the piece (horizontally, vertically, or diagonally)
-
+- Command-line argument parsing and validation
+- Pointers and array manipulation
+- String processing
+- Multi-dimensional arrays for board representation
+- Input validation with error handling
+- Unicode and ANSI escape sequences for formatted output
+- Win condition detection algorithms
+- Modular function design
 
 ## Compilation and Execution
 ```bash
-# Compile
 clang -o a2 a2.c framework.c
-
-# Run without color
 ./a2
 
-# Run with color disabled (explicit)
-./a2 disabled
-
-# Run with color enabled
+# Or with color enabled
 ./a2 enabled
-
 ```
 
-## Standard Gameplay Loop
+## Sample Output
+```
 ===| Welcome to       |===
 ===| [I]ntricate      |===
 ===| [S]quare         |===
@@ -66,11 +45,11 @@ clang -o a2 a2.c framework.c
 
      A  B  C  D  E
    + -------------
- 1 | ·  ·  ·  ·  ·
- 2 | ·  ·  ·  ·  ·
- 3 | ·  ·  ·  ·  ·
- 4 | ·  ·  ·  ·  ·
- 5 | ·  ·  ·  ·  ·
+ 1 | .  .  .  .  .
+ 2 | .  .  .  .  .
+ 3 | .  .  .  .  .
+ 4 | .  .  .  .  .
+ 5 | .  .  .  .  .
 
 ---| Remaining Pieces |---
 
@@ -83,11 +62,11 @@ P1 > b1
 
      A  B  C  D  E
    + -------------
- 1 | ·  ■  ·  ·  ·
- 2 | ·  ·  ·  ·  ·
- 3 | ·  ·  ·  ·  ·
- 4 | ·  ·  ·  ·  ·
- 5 | ·  ·  ·  ·  ·
+ 1 | .  X  .  .  .
+ 2 | .  .  .  .  .
+ 3 | .  .  .  .  .
+ 4 | .  .  .  .  .
+ 5 | .  .  .  .  .
 
 ---| Remaining Pieces |---
 
@@ -100,11 +79,11 @@ P2 > d5
 
      A  B  C  D  E
    + -------------
- 1 | ·  ■  ·  ·  ·
- 2 | ·  ·  ·  ·  ·
- 3 | ·  ·  ·  ·  ·
- 4 | ·  ·  ·  ·  ·
- 5 | ·  ·  ·  □  ·
+ 1 | .  X  .  .  .
+ 2 | .  .  .  .  .
+ 3 | .  .  .  .  .
+ 4 | .  .  .  .  .
+ 5 | .  .  .  O  .
 
 ---| Remaining Pieces |---
 
@@ -117,11 +96,11 @@ P1 > C2
 
      A  B  C  D  E
    + -------------
- 1 | ·  ■  ·  ·  ·
- 2 | ·  ·  ■  ·  ·
- 3 | ·  ·  ·  ·  ·
- 4 | ·  ·  ·  ·  ·
- 5 | ·  ·  ·  □  ·
+ 1 | .  X  .  .  .
+ 2 | .  .  X  .  .
+ 3 | .  .  .  .  .
+ 4 | .  .  .  .  .
+ 5 | .  .  .  O  .
 
 ---| Remaining Pieces |---
 
@@ -134,11 +113,11 @@ P2 > D4
 
      A  B  C  D  E
    + -------------
- 1 | ·  ■  ·  ·  ·
- 2 | ·  ·  ■  ·  ·
- 3 | ·  ·  ·  ·  ·
- 4 | ·  ·  ·  □  ·
- 5 | ·  ·  ·  □  ·
+ 1 | .  X  .  .  .
+ 2 | .  .  X  .  .
+ 3 | .  .  .  .  .
+ 4 | .  .  .  O  .
+ 5 | .  .  .  O  .
 
 ---| Remaining Pieces |---
 
@@ -151,11 +130,11 @@ P1 > b3
 
      A  B  C  D  E
    + -------------
- 1 | ·  ■  ·  ·  ·
- 2 | ·  ·  ■  ·  ·
- 3 | ·  ■  ·  ·  ·
- 4 | ·  ·  ·  □  ·
- 5 | ·  ·  ·  □  ·
+ 1 | .  X  .  .  .
+ 2 | .  .  X  .  .
+ 3 | .  X  .  .  .
+ 4 | .  .  .  O  .
+ 5 | .  .  .  O  .
 
 ---| Remaining Pieces |---
 
@@ -168,11 +147,11 @@ P2 > B4
 
      A  B  C  D  E
    + -------------
- 1 | ·  ■  ·  ·  ·
- 2 | ·  ·  ■  ·  ·
- 3 | ·  ■  ·  ·  ·
- 4 | ·  □  ·  □  ·
- 5 | ·  ·  ·  □  ·
+ 1 | .  X  .  .  .
+ 2 | .  .  X  .  .
+ 3 | .  X  .  .  .
+ 4 | .  O  .  O  .
+ 5 | .  .  .  O  .
 
 ---| Remaining Pieces |---
 
@@ -185,11 +164,11 @@ P1 > C4
 
      A  B  C  D  E
    + -------------
- 1 | ·  ■  ·  ·  ·
- 2 | ·  ·  ■  ·  ·
- 3 | ·  ■  ·  ·  ·
- 4 | ·  □  ■  □  ·
- 5 | ·  ·  ·  □  ·
+ 1 | .  X  .  .  .
+ 2 | .  .  X  .  .
+ 3 | .  X  .  .  .
+ 4 | .  O  X  O  .
+ 5 | .  .  .  O  .
 
 ---| Remaining Pieces |---
 
@@ -202,11 +181,11 @@ P2 > c5
 
      A  B  C  D  E
    + -------------
- 1 | ·  ■  ·  ·  ·
- 2 | ·  ·  ■  ·  ·
- 3 | ·  ■  ·  ·  ·
- 4 | ·  □  ■  □  ·
- 5 | ·  ·  □  □  ·
+ 1 | .  X  .  .  .
+ 2 | .  .  X  .  .
+ 3 | .  X  .  .  .
+ 4 | .  O  X  O  .
+ 5 | .  .  O  O  .
 
 P1 > b1 B2
 
@@ -214,11 +193,11 @@ P1 > b1 B2
 
      A  B  C  D  E
    + -------------
- 1 | ·  ·  ·  ·  ·
- 2 | ·  ■  ■  ·  ·
- 3 | ·  ■  ·  ·  ·
- 4 | ·  □  ■  □  ·
- 5 | ·  ·  □  □  ·
+ 1 | .  .  .  .  .
+ 2 | .  X  X  .  .
+ 3 | .  X  .  .  .
+ 4 | .  O  X  O  .
+ 5 | .  .  O  O  .
 
 P2 > d4 C3
 
@@ -226,11 +205,11 @@ P2 > d4 C3
 
      A  B  C  D  E
    + -------------
- 1 | ·  ·  ·  ·  ·
- 2 | ·  ■  ■  ·  ·
- 3 | ·  ■  □  ·  ·
- 4 | ·  □  ■  ·  ·
- 5 | ·  ·  □  □  ·
+ 1 | .  .  .  .  .
+ 2 | .  X  X  .  .
+ 3 | .  X  O  .  .
+ 4 | .  O  X  .  .
+ 5 | .  .  O  O  .
 
 P1 > B3 a2
 
@@ -238,11 +217,11 @@ P1 > B3 a2
 
      A  B  C  D  E
    + -------------
- 1 | ·  ·  ·  ·  ·
- 2 | ■  ■  ■  ·  ·
- 3 | ·  ·  □  ·  ·
- 4 | ·  □  ■  ·  ·
- 5 | ·  ·  □  □  ·
+ 1 | .  .  .  .  .
+ 2 | X  X  X  .  .
+ 3 | .  .  O  .  .
+ 4 | .  O  X  .  .
+ 5 | .  .  O  O  .
 
 P2 > c3 d4
 
@@ -250,11 +229,11 @@ P2 > c3 d4
 
      A  B  C  D  E
    + -------------
- 1 | ·  ·  ·  ·  ·
- 2 | ■  ■  ■  ·  ·
- 3 | ·  ·  ·  ·  ·
- 4 | ·  □  ■  □  ·
- 5 | ·  ·  □  □  ·
+ 1 | .  .  .  .  .
+ 2 | X  X  X  .  .
+ 3 | .  .  .  .  .
+ 4 | .  O  X  O  .
+ 5 | .  .  O  O  .
 
 P1 > c4 d3
 
@@ -262,11 +241,11 @@ P1 > c4 d3
 
      A  B  C  D  E
    + -------------
- 1 | ·  ·  ·  ·  ·
- 2 | ■  ■  ■  ·  ·
- 3 | ·  ·  ·  ■  ·
- 4 | ·  □  ·  □  ·
- 5 | ·  ·  □  □  ·
+ 1 | .  .  .  .  .
+ 2 | X  X  X  .  .
+ 3 | .  .  .  X  .
+ 4 | .  O  .  O  .
+ 5 | .  .  O  O  .
 
 P2 > b4 c4
 
@@ -274,11 +253,10 @@ P2 > b4 c4
 
      A  B  C  D  E
    + -------------
- 1 | ·  ·  ·  ·  ·
- 2 | ■  ■  ■  ·  ·
- 3 | ·  ·  ·  ■  ·
- 4 | ·  ·  □  □  ·
- 5 | ·  ·  □  □  ·
+ 1 | .  .  .  .  .
+ 2 | X  X  X  .  .
+ 3 | .  .  .  X  .
+ 4 | .  .  O  O  .
+ 5 | .  .  O  O  .
 
 ===| Winner: Player 2 |===
-
